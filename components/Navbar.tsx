@@ -1,42 +1,49 @@
+"use client";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 export default function Navbar() {
+  const params = useParams();
+  const locale = params.locale || "en";
+  const isAr = locale === "ar";
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-zinc-900">
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-zinc-900"
+      dir={isAr ? "rtl" : "ltr"}
+    >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Brand Logo */}
-        <Link
-          href="/"
-          className="font-bold text-xl tracking-tighter text-white"
-        >
+        <Link href={`/${locale}`} className="font-bold text-xl text-white">
           BRAND<span className="text-emerald-500">.</span>
         </Link>
 
-        {/* Navigation Links */}
         <div className="flex gap-8 items-center">
           <Link
-            href="/articles"
-            className="text-xs font-mono uppercase tracking-widest text-zinc-400 hover:text-emerald-400 transition-colors"
+            href={`/${locale}/articles`}
+            className="text-xs font-mono uppercase tracking-widest text-zinc-400 hover:text-emerald-400"
           >
-            Articles
+            {isAr ? "مقالات" : "Articles"}
           </Link>
           <Link
-            href="/insights"
-            className="text-xs font-mono uppercase tracking-widest text-zinc-400 hover:text-emerald-400 transition-colors"
+            href={`/${locale}/insights`}
+            className="text-xs font-mono uppercase tracking-widest text-zinc-400 hover:text-emerald-400"
           >
-            Insights
+            {isAr ? "رؤى" : "Insights"}
           </Link>
           <Link
-            href="/portfolio"
-            className="text-xs font-mono uppercase tracking-widest text-zinc-400 hover:text-emerald-400 transition-colors"
+            href={`/${locale}/portfolio`}
+            className="text-xs font-mono uppercase tracking-widest text-zinc-400 hover:text-emerald-400"
           >
-            Portfolio
+            {isAr ? "أعمالنا" : "Portfolio"}
           </Link>
 
-          {/* Action Button */}
-          <button className="ml-4 bg-white text-black px-5 py-1.5 rounded-full text-xs font-bold hover:bg-emerald-400 transition-all active:scale-95">
-            LET&apos;S TALK
-          </button>
+          {/* Locale Switcher */}
+          <Link
+            href={isAr ? "/en/portfolio" : "/ar/portfolio"}
+            className="text-[10px] border border-zinc-700 px-2 py-1 rounded text-zinc-500 hover:bg-zinc-800"
+          >
+            {isAr ? "EN" : "AR"}
+          </Link>
         </div>
       </div>
     </nav>
